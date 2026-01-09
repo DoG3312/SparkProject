@@ -49,7 +49,7 @@ public class Bullet : MonoBehaviour
         {
             if (other.TryGetComponent(out Controller controller))
             {
-                controller.TakeDamage(damage, repulsionForce, gameObject);
+                controller.TakeDamage(damage, repulsionForce, gameObject.transform.position);
             }
             bulletPool.Release(this);
         }

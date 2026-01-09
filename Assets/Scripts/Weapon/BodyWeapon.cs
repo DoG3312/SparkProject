@@ -13,6 +13,6 @@ public class BodyWeapon : MeleeWeapon
     public override void DamageTrigger(Controller controller, GameObject attacker)
     {
         base.DamageTrigger(controller, attacker);
-        ownerController.repulsiveness.ApplyRepulsion(attacker, repulsionForce);
+        ownerController.repulsiveness.ApplyRepulsion(attacker.transform.position, repulsionForce);
     }
 }

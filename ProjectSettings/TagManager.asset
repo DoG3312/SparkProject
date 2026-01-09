@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Summon
+  - Ground
   layers:
   - Default
   - TransparentFX

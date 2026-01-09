@@ -11,7 +11,9 @@ public class PlayerInventory : MonoBehaviour
     public InventorySlot[] weapons;
     public InventorySlot[] skills;
 
+    public Transform artifactInventory;
     public GameObject inventoryItemPrefab;
+    public GameObject slotPrefab;
 
     public void AddItem(Item item)
     {
@@ -36,7 +38,7 @@ public class PlayerInventory : MonoBehaviour
                 AddItemToSlot(potionsSlots, item);
                 break;
             case ItemType.Artifact:
-
+                SpawnArtifactInInventory(item);
                 break;
         }
     }
@@ -46,6 +48,16 @@ public class PlayerInventory : MonoBehaviour
         GameObject newItemGO = Instantiate(inventoryItemPrefab, slot.transform);
         InventoryItem inventoryItem = newItemGO.GetComponent<InventoryItem>();
         inventoryItem.InitialiseItem(item, index, slot.inventoryListType);
+    }
+
+    void SpawnArtifactInInventory(Item item)
+    {
+        GameObject newSlot = Instantiate(slotPrefab, artifactInventory);
+        InventorySlot inventorySlot = newSlot.GetComponent<InventorySlot>();
+        inventorySlot.SetInventoryType(ItemType.Artifact);
+        GameObject newItem = Instantiate(inventoryItemPrefab, newSlot.transform);
+        InventoryItem inventoryItem = newItem.GetComponent<InventoryItem>();
+        inventoryItem.InitialiseItem(item);
     }
 
     bool AddItemToSlot(InventorySlot[] inventorySlots, Item item)

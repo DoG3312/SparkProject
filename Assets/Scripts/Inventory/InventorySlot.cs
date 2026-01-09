@@ -33,4 +33,9 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     {
         this.playerController = playerController;
     }
+
+    public void SetInventoryType(ItemType itemType)
+    {
+        this.itemType = itemType;
+    }
 }

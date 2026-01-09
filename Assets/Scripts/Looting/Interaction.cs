@@ -10,8 +10,7 @@ public class Interaction : MonoBehaviour
 
     private void Awake()
     {
-        if (TryGetComponent<PlayerController>(out var playerControllert))
-            playerController = playerControllert;
+        playerController = GetComponentInParent<PlayerController>();
         inputActions = new InputSystem_Actions();
         inputActions.Enable();
     }

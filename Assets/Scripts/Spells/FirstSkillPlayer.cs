@@ -9,6 +9,7 @@ public class FirstSkillPlayer : MonoBehaviour
     [SerializeField] private float skillCooldown = 5f;
     [SerializeField] private float skillDamage = 10f;
     [SerializeField] private float explosionRadius = 3f;
+    [SerializeField] private float repulsionForce = 1f;
     [SerializeField] private KeyCode abilityKey = KeyCode.Alpha1;
     [SerializeField] LayerMask surfaceLayer;
     private bool isOnCooldown = false;
@@ -40,7 +41,7 @@ public class FirstSkillPlayer : MonoBehaviour
         if (playerControlls != null)
             playerControlls.enabled = false;
 
-        CreatingDamageArea.AbilityDamageArea(surfaceLayer, explosionRadius, skillDamage);
+        CreatingDamageArea.AbilityDamageArea(MousePosition.GetMousePosition(), surfaceLayer, explosionRadius, skillDamage, repulsionForce);
 
         yield return new WaitForSeconds(castTime);
 

@@ -9,12 +9,14 @@ public abstract class Controller : MonoBehaviour
     [SerializeField] protected Transform weaponSlot;
     protected QuickAccessToolbarController toolbarController;
     protected Inventory inventory;
+    protected SkillUser skillUser;
     public Repulsiveness repulsiveness;
 
     protected virtual void Awake()
     {
         view = GetComponent<View>();
-        inventory = new Inventory(this);
+        skillUser = GetComponent<SkillUser>();
+        inventory = new Inventory(this, skillUser);
         toolbarController = new QuickAccessToolbarController(this, inventory.weapons);
         inventory.OnWeaponsChanged += toolbarController.UpdateToolBar;
     }
@@ -33,12 +35,12 @@ public abstract class Controller : MonoBehaviour
         view.healthBar.UpdateHealthBar(model.HP,model.stats.MaxHP);
     }
 
-    public void TakeDamage(float damage, float repulsionForce = 0, GameObject source = null)
+    public void TakeDamage(float damage, float repulsionForce = 0, Vector3 source = default)
     {
         model.TakeDamage(damage);
         view.healthBar.UpdateHealthBar(model.HP,model.stats.MaxHP);
 
-        if (source != null && repulsiveness != null)
+        if (source != Vector3.zero && repulsiveness != null)
         {
             repulsiveness.ApplyRepulsion(source, repulsionForce);
         }
@@ -68,8 +70,8 @@ public abstract class Controller : MonoBehaviour
 
     public void ApplyAmp(Amplifier amp) => model.ApplyAmp(amp);
     public void RemoveAmp(Amplifier amp) => model.RemoveAmp(amp);
-
-    
+    public Inventory GetInventory() => inventory;
+    public Transform GetAttackPoint() => weaponSlot;
 
     public void RemoveArtifact(ArtifactItem artifact)
     {
@@ -87,4 +89,6 @@ public abstract class Controller : MonoBehaviour
     {
         inventory.AddItem(item);
     }
+
+
 }

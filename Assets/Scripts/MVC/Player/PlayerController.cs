@@ -8,7 +8,8 @@ public class PlayerController : Controller
     private PlayerMovement playerMovement;
     public InputSystem_Actions inputActions;
     private PlayerInventory playerInventory;
-    public Item dopWeapon;
+
+    public Item weaponn;
 
     protected void Start()
     {
@@ -27,6 +28,7 @@ public class PlayerController : Controller
             weapon.UpdateWeaponStats(model.stats, model.calculatedAttackSpeed);
             view.AttackSpeedAnimChanged(model.calculatedAttackSpeed);
         }
+        AddItemInInventory(weaponn);
     }
 
     protected override void Awake()

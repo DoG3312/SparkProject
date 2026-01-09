@@ -13,10 +13,10 @@ public class Repulsiveness
         this.repulsionResistance = repulsionResistance;
     }
 
-    public void ApplyRepulsion(GameObject source, float force)
+    public void ApplyRepulsion(Vector3 source, float force)
     {
         float currentForce = force * (1 - repulsionResistance.RepulsionResistance);
-        Vector3 repulsionDirection = (controller.transform.position - source.transform.position).normalized;
+        Vector3 repulsionDirection = (controller.transform.position - source).normalized;
 
         repulsionDirection.y = 0f; 
         repulsionDirection = repulsionDirection.normalized;

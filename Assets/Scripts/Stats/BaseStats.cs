@@ -1,5 +1,20 @@
 using UnityEngine;
 
+public interface ISpellDamage
+{
+    float SpellDamage { get; set; }
+}
+
+public interface ICooldownReduction
+{
+    float CooldownReduction { get; set; }
+}
+
+public interface ISpellStats : ICooldownReduction, ISpellDamage
+{
+
+}
+
 public interface IAttackSpeed
 {
     float AttackSpeed { get; set; }
@@ -29,7 +44,7 @@ public interface IAttackMask
     LayerMask IgnoreMask { get; set; } //что должна игнорировать
 }
 
-public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IAttackStats, IAttackMask
+public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IAttackStats, IAttackMask, ISpellStats
 {
     [Header("Health")]
     [SerializeField] protected float maxHP;
@@ -42,6 +57,9 @@ public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IA
     [SerializeField] protected float attackRange;
     [SerializeField] protected float attackSpeed;
     [SerializeField] protected float repulsionForce = 4f;
+    [Header("SpellStats")]
+    [SerializeField] protected float spellDamage; 
+    [SerializeField] protected float cooldownReduction;
     [Header("AttackMask")]
     [SerializeField] protected LayerMask layerMask;
     [SerializeField] protected LayerMask ignoreMask;
@@ -61,11 +79,13 @@ public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IA
         get { return repulsionResistance; }
         set { repulsionResistance = value; }
     }
+    //Movement
     public float Speed
     {
         get { return speed; }
         set { speed = value; }
     }
+    //Attack
     public float Damage
     {
         get { return damage; }
@@ -81,13 +101,23 @@ public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IA
         get { return attackSpeed; }
         set { attackSpeed = value; }
     }
-
     public float RepulsionForce
     {
         get { return repulsionForce; }
         set { repulsionForce = value; }
     }
-
+    //SpeelStats
+    public float SpellDamage
+    {
+        get { return spellDamage; }
+        set { spellDamage = value; }
+    }
+    public float CooldownReduction
+    {
+        get { return cooldownReduction; }
+        set { cooldownReduction = value; }
+    }
+    //AttackMask
     public LayerMask LayerMask
     {
         get { return layerMask; }

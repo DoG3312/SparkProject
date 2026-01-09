@@ -19,7 +19,7 @@ public abstract class View : MonoBehaviour
         animator.SetFloat("AttackSpeed", speed);
     }
 
-    private void Start()
+    private void Awake()
     {
         animator = GetComponent<Animator>();
         healthBar = GetComponent<HealthBar>();

@@ -4,20 +4,20 @@ using UnityEngine.UI;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [HideInInspector] public Item item;
+    public Item item;
     public InventoryListType currentInventoryType;
     public int currentIndex;
 
     [HideInInspector]public Image image;
     [HideInInspector]public Transform parentAfterDrag;
 
-    public void InitialiseItem(Item item, int index, InventoryListType inventoryType)
+    public void InitialiseItem(Item item, int index = 0, InventoryListType inventoryType = InventoryListType.Weapons)
     {
         image = GetComponent<Image>();
         this.item = item;
         currentIndex = index;
         currentInventoryType = inventoryType;
-        image.sprite = item.image;
+        image.sprite = item.IconImage;
     }
 
     public void OnBeginDrag(PointerEventData eventData)

@@ -11,9 +11,11 @@ public enum ItemType
 
 
 public abstract class Item : ScriptableObject
-{ 
-    public string itemName;
-    public Sprite image;
+{
+    [Header("Item")]
+    [field: SerializeField] public string Title { get; private set; }
+    [field: SerializeField] public string Description { get; private set; }
+    [field: SerializeField] public Sprite IconImage { get; private set; }
     public ItemType type;
     public bool stackable = false;
     public int maxStack = 1;

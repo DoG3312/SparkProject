@@ -1,6 +1,7 @@
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public enum InventoryListType
 {
@@ -16,29 +17,34 @@ public class Inventory
 {
     [Header("Inventory")]
     public WeaponItem[] weaponSlots;
-    public SkillItem[] skillSlots;
+    public SkillConfig[] skillSlots;
     public Item[] throwablesSlots;
     public Item[] potionsSlots;
     [Header("QuickAccessToolbar")]
     public WeaponItem[] weapons;
-    public SkillItem[] skills;
+    public SkillConfig[] skills;
     [Header("Artifacts")]
     public List<Artifact> artifacts;
 
+    private List<BaseSkill> currentSkills = new();
+
     public event Action OnWeaponsChanged;
+
+    public SkillUser skillUser; //надеюсь временно
 
     public Controller controller; //возможно здесь его не должно быть
 
-    public Inventory(Controller controller)
+    public Inventory(Controller controller, SkillUser skillUser)
     {
         weaponSlots = new WeaponItem[10];
-        skillSlots = new SkillItem[10];
+        skillSlots = new SkillConfig[10];
         throwablesSlots = new Item[5];
         potionsSlots = new Item[5];
         weapons = new WeaponItem[2];
-        skills = new SkillItem[2];
+        skills = new SkillConfig[2];
         artifacts = new List<Artifact>();
         this.controller = controller;
+        this.skillUser = skillUser;
     }
 
     public void AddItem(Item item)
@@ -59,6 +65,10 @@ public class Inventory
                 if (!AddItemToSlot(skills, item))
                 {
                     AddItemToSlot(skillSlots, item);
+                }
+                else
+                {
+                    InitSkills();
                 }
                 break;
             case ItemType.Throwable:
@@ -95,7 +105,7 @@ public class Inventory
         artifact.artifact.ApplyEffect(controller);
     }
 
-    public bool MoveItem(InventoryListType from, int fromIndex, InventoryListType to, int toIndex)
+    public void MoveItem(InventoryListType from, int fromIndex, InventoryListType to, int toIndex)
     {
         //откуда
         Item[] sourceList = GetInventoryList(from);
@@ -112,8 +122,7 @@ public class Inventory
         sourceList[fromIndex] = null;
 
         OnWeaponsChanged();
-
-        return true;
+        InitSkills();
     }
 
     private Item[] GetInventoryList(InventoryListType listType)
@@ -130,4 +139,19 @@ public class Inventory
         Debug.Log("Тут ошибочка с enum");
         return null;
     }
+
+    public void InitSkills()
+    {
+        for (int i = 0; i < skills.Length; ++i)
+        {
+            if(skills[i] == null) return;
+            SkillBuilder skillBuilder = skills[i].GetBuildet();
+            currentSkills.Clear();
+            skillBuilder.Make();
+            currentSkills.Add(skillBuilder.GetResult());
+            skillUser.Initialization();
+        }
+    }
+
+    public BaseSkill[] GetSkills() => currentSkills.ToArray();
 }

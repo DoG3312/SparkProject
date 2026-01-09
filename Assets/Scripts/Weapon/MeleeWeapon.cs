@@ -15,6 +15,6 @@ public class MeleeWeapon : BaseWeapon
 
     public virtual void DamageTrigger(Controller controller, GameObject attacker)
     {
-        controller.TakeDamage(GetAtkStat(AtkStat.Damage), GetAtkStat(AtkStat.Repulsion), gameObject);
+        controller.TakeDamage(GetAtkStat(AtkStat.Damage), GetAtkStat(AtkStat.Repulsion), gameObject.transform.position);
     }
 }

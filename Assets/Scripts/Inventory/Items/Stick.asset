@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 607b8383e4520df4a96bb2f624ab187f, type: 3}
   m_Name: Stick
   m_EditorClassIdentifier: 
-  itemName: 
-  image: {fileID: 1478559130, guid: 754ea07d8d8111946b499d8e28fcd583, type: 3}
+  <Title>k__BackingField: 
+  <Description>k__BackingField: 
+  <IconImage>k__BackingField: {fileID: 1478559130, guid: 754ea07d8d8111946b499d8e28fcd583, type: 3}
   type: 0
   stackable: 0
   maxStack: 1
